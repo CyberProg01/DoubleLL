@@ -1,0 +1,87 @@
+
+//Queue using Linked List
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void enqueue(int x) {
+    struct Node* new_node = (struct Node*)malloc(sizeof(struct Node));
+    new_node->data = x;
+    new_node->next = NULL;
+    if (rear == NULL) {
+        front = rear = new_node;
+        return;
+    }
+    rear->next = new_node;
+    rear = new_node;
+}
+
+void dequeue() {
+    if (front == NULL) {
+        printf("Error: Queue is empty\n");
+        return;
+    }
+    struct Node* temp = front;
+    front = front->next;
+    if (front == NULL) {
+        rear = NULL;
+    }
+    free(temp);
+}
+
+int peek() {
+    if (front == NULL) {
+        printf("Error: Queue is empty\n");
+        exit(1);
+    }
+    return front->data;
+}
+
+void printQueue() {
+    struct Node* temp = front;
+    if(temp==NULL)                        // changes occurred 
+      printf("No data items");
+    while (temp != NULL) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("\n");
+}
+
+
+int main()
+{
+  int n,data;
+do{
+  
+  printf("1.Enqueue\n2.Dequeue\n3.peek\n4.printQueue\n5.exit\nEnter: ");
+  scanf("%d",&n);
+  switch(n)
+  {
+    
+    case 1: 
+            printf("enter data to Enqueue:");
+            scanf("%d",&data);
+            enqueue(data); break;
+    case 2: dequeue(); break;
+    case 3: peek();break;
+    case 4: printQueue(); break;
+    case 5: exit(0); 
+    default : printf("entered wrong choice");
+    }
+  
+}while(n!=5);
+return 0;
+}
+
+
+
+
