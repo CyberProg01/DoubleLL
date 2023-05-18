@@ -1,0 +1,226 @@
+// Double linked list
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+  
+  int data;
+  struct node *left;
+  struct node *right;
+};
+struct node *head=NULL,*tail=NULL,*p,*temp,*addr;
+void create()
+{
+  int data,i,n;
+  printf("Enter the number of elements");
+  scanf("%d",&n);
+  for(i=1;i<=n;i++)
+  {
+    p=(struct node *)malloc(sizeof(struct node*));
+    printf("Enter the data to create");
+    scanf("%d",&data);
+    p->data=data;
+    p->right=NULL;
+    p->left=NULL;
+    if(head==NULL)
+      head=tail=p;
+    else
+    {
+      tail->right=p;
+      p->left=tail;
+      tail=p;
+    }
+  }
+}
+
+void insertbeg()
+{
+  int data;
+  printf("Enter the data");
+  scanf("%d",&data);
+  p=(struct node *)malloc(sizeof(struct node));
+  p->data=data;
+  p->left=NULL;
+  p->right=NULL;
+  if(head==NULL)
+    head=tail=p;
+  else
+  {
+    p->right=head;
+    head->left=p;
+    head=p;
+  }
+}
+void insertmid()
+{
+  int data;
+  int pos,i=1;
+  printf("Enter the data");
+    scanf("%d",&data);
+    p=(struct node *)malloc(sizeof(struct node));
+    p->data=data;
+    p->left=NULL;
+    p->right=NULL;
+  if(head==NULL)
+    head=tail=p;
+  else 
+  {
+    printf("Enter the position of data to be inserted");
+    scanf("%d",&pos);
+    temp=head;
+    while(i<pos-1)
+    {
+      temp=temp->right;
+      addr=temp->right;
+      i++;
+    }
+    temp->right=p;
+    p->left=temp;
+    p->right=addr;
+    addr->left=p;
+  }
+}
+
+void insertend()
+{
+  int data;
+  printf("Enter the data");
+  scanf("%d",&data);
+  p=(struct node *)malloc(sizeof(struct node));
+  p->data=data;
+  p->left=NULL;
+  p->right=NULL;
+  if(head==NULL)
+    head=tail=p;
+  else
+  {
+    tail->right=p;
+    p->left=tail;
+    tail=p;
+  }
+    
+}
+void deletebeg()
+{
+    p=head;
+    temp=p->right;
+    temp->left=NULL;
+    free(p);
+    head=temp;
+}
+void deletemid()
+{
+  int i=1,j=1,pos;
+  struct node *addr;
+  p=head;
+  if(head->right==NULL)
+  {
+    free(p);
+    head=tail=NULL;
+  }else
+  {
+    
+    while(p!=NULL)
+    {
+      p=p->right;
+      j++;
+     }
+    printf("Enter position(1-%d))to delete data",j-1);
+    scanf("%d",&pos);
+    p=head;
+    while(i<pos)
+    {
+      temp=p;
+      p=p->right;
+      i++;
+    }
+    temp->right=p->right;
+    addr=p->right;
+    addr->left=temp;
+     if(p==tail)
+      tail=temp;
+    free(p);
+  }
+}
+
+void deleteend()
+{
+      p=tail;
+      temp=p->left;
+      temp->right=NULL;
+      free(p);
+      tail=temp;
+}
+
+void display()
+{
+  p=head;
+  if(head==NULL)
+    printf("Data is empty");
+  else
+  {
+    while(p!=NULL)
+    {
+      printf("%d\n",p->data);
+      p=p->right;
+    }
+  }
+}
+
+void main()
+{
+  int n,m;
+  printf("1.Create\n2.Insert\n3.Delete\n4.Display\n5.Exit");
+  do
+  {
+    printf("Enter your choice");
+    scanf("%d",&n);
+    switch(n)
+    {
+      case 1 : create(); break;
+      case 2 : printf("!.Insert begining\n2.Insert middle\n3.Insert ending");
+               scanf("%d",&m);
+               switch(m)
+               {
+                  case 1 : insertbeg(); break;
+                  case 2 : insertmid(); break;
+                  case 3 : insertend(); break;
+                }
+                 break;
+      case 3 : 
+              if(head==NULL)
+                 printf("Data is empty to Delete");
+           else{
+            printf("1.delete begining\n2.delete middle\n3.delete end ");
+           scanf("%d",&m);
+           
+           switch(m)
+           {
+             case 1 : deletebeg(); break;
+             case 2 : deletemid(); break;
+             case 3 : deleteend(); break;
+           }} break;
+      case 4 : display(); break;
+      case 5 : exit(0);
+      default : printf(" You entered a wrong choice");
+    }
+  }while(n!=5);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
